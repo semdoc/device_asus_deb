@@ -26,14 +26,20 @@ on init
     mkdir /storage/emulated 0555 root root
     mkdir /storage/emulated/legacy 0555 root root
 
+    # USB storage
+    mkdir /storage/usbdisk0 0000 system system
+
     export EXTERNAL_STORAGE /storage/emulated/legacy
     export EMULATED_STORAGE_SOURCE /mnt/shell/emulated
     export EMULATED_STORAGE_TARGET /storage/emulated
+    export SECONDARY_STORAGE /storage/usbdisk0
 
     # Support legacy paths
     symlink /storage/emulated/legacy /sdcard
     symlink /storage/emulated/legacy /mnt/sdcard
     symlink /storage/emulated/legacy /storage/sdcard0
+    symlink /storage/usbdisk0 /usbdisk0
+    symlink /storage/usbdisk0 /mnt/usbdisk0
 
 on init
     # Set permissions for persist partition
