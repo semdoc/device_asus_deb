@@ -23,9 +23,9 @@ $(call inherit-product, device/asus/deb/device.mk)
 # Inherit from the common Open Source product configuration
 $(call inherit-product, $(SRC_TARGET_DIR)/product/aosp_base.mk)
 
-PRODUCT_NAME := aosp_deb
+PRODUCT_NAME := full_deb
 PRODUCT_DEVICE := deb
-PRODUCT_BRAND := Android
-PRODUCT_MODEL := AOSP on Deb
+PRODUCT_BRAND := Asus
+PRODUCT_MODEL := Deb
 PRODUCT_MANUFACTURER := ASUS
 PRODUCT_RESTRICT_VENDOR_FILES := true
