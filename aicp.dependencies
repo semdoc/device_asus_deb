@@ -15,7 +15,7 @@
    "branch":      "kitkat"
   },
   {
-   "repository":  "SlimRoms/proprietary_vendor_broadcom",
+   "repository":  "TheLoonyBin/proprietary_vendor_broadcom",
    "target_path": "vendor/broadcom",
    "branch":      "kk4.4"
   },
