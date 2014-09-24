@@ -30,13 +30,6 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     nfc_nci.deb
 
-# F2FS filesystem
-PRODUCT_PACKAGES += \
-    mkfs.f2fs \
-    fsck.f2fs \
-    fibmap.f2fs \
-    f2fstat
-
 # Do not power down SIM card when modem is sent to Low Power Mode.
 PRODUCT_PROPERTY_OVERRIDES += \
         persist.radio.apm_sim_not_pwdn=1
