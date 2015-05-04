@@ -20,6 +20,9 @@ PRODUCT_PACKAGES := \
     CarrierConfig \
     BasicSmsReceiver
 
+PRODUCT_COPY_FILES += \
+    device/asus/deb/twrp.fstab:recovery/root/etc/twrp.fstab
+
 PRODUCT_COPY_FILES := \
     device/asus/deb/fstab.deb:root/fstab.flo \
     device/asus/deb/init.deb.rc:root/init.flo.rc
