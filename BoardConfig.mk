@@ -22,7 +22,7 @@ BOARD_HAL_STATIC_LIBRARIES := libdumpstate.deb
 
 TARGET_RELEASETOOLS_EXTENSIONS := device/asus/deb
 
-TARGET_RECOVERY_FSTAB = device/asus/deb/fstab.deb
+TARGET_RECOVERY_FSTAB = device/asus/deb/twrp.fstab
 
 -include vendor/asus/deb/BoardConfigVendor.mk
 include device/asus/flo/BoardConfigCommon.mk
