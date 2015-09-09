@@ -6,6 +6,3 @@ ro.telephony.default_network=9
 telephony.lteOnGsmDevice=1
 #Display Traditional Chinese/Simplified Chinese carriers name
 persist.radio.use_cc_names=true
-
-#AICP Device Maintainers
-ro.aicp.maintainer=semdoc (doc HD), Ali B (eyosen)
