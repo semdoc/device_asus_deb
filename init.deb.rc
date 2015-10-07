@@ -24,6 +24,7 @@ on early-init
     symlink /data/tombstones /tombstones
 
 on init
+
     # See storage config details at http://source.android.com/tech/storage/
     mkdir /mnt/shell/emulated 0700 shell shell
     mkdir /storage/emulated 0555 root root
@@ -38,10 +39,8 @@ on init
     export SECONDARY_STORAGE /storage/usbdisk
 
     # Support legacy paths
-    symlink /storage/emulated/legacy /sdcard
-    symlink /storage/emulated/legacy /mnt/sdcard
-    symlink /storage/emulated/legacy /storage/sdcard0
-    symlink /mnt/shell/emulated/0 /storage/emulated/legacy
+    symlink /sdcard /mnt/sdcard
+    symlink /sdcard /storage/sdcard0
 
     # Set permissions for persist partition
     mkdir /persist 0771 system system
@@ -50,7 +49,6 @@ on init
 on fs
     mount_all ./fstab.flo
     restorecon_recursive /persist
-    setprop ro.crypto.fuse_sdcard true
     write /sys/kernel/boot_adsp/boot 1
 
 on early-boot
@@ -70,12 +68,6 @@ on boot
 
     # Allow QMUX daemon to assign port open wait time
     chown radio radio /sys/devices/virtual/hsicctl/hsicctl0/modem_wait
-
-    # java.io.FileNotFoundException: /proc/cmdline: open failed: EACCES (Permission denied)
-    chmod 0644 /proc/cmdline
-
-    #Remove SUID bit for iproute2 ip tool
-    chmod 0755 /system/bin/ip
 
     #port-bridge
     chmod 0660 /dev/smd0
@@ -143,12 +135,9 @@ on boot
 
 # msm specific files that need to be created on /data
 on post-fs-data
-    mkdir /data/media 0770 media_rw media_rw
-
     chown system system /dev/wcnss_wlan
     write /sys/module/wcnss_ssr_8960/parameters/enable_riva_ssr 1
 
-    mkdir /data/tombstones 0771 system system
     mkdir /tombstones/modem 0771 system system
     mkdir /tombstones/lpass 0771 system system
     mkdir /tombstones/wcnss 0771 system system
@@ -245,11 +234,10 @@ service rmt_storage /system/bin/rmt_storage
     user root
     group system
 
-service hciattach /system/bin/sh /system/etc/init.flo.bt.sh
+service hciattach /system/bin/init.flo.bt.sh
     class late_start
     user bluetooth
     group qcom_oncrpc bluetooth net_bt_admin system net_bt_stack
-    seclabel u:r:bluetooth_loader:s0
     disabled
     oneshot
 
@@ -270,10 +258,9 @@ service qmuxd /system/bin/qmuxd
     user radio
     group radio audio bluetooth gps net_bt_stack
 
-service ks_checker /system/bin/sh /system/etc/kickstart_checker.sh
+service ks_checker /system/bin/kickstart_checker.sh
     class core
     group system
-    seclabel u:r:kickstart:s0
     oneshot
 
 service kickstart /system/bin/qcks -i /firmware/image/ -r /data/tombstones/mdm/
@@ -282,10 +269,6 @@ service kickstart /system/bin/qcks -i /firmware/image/ -r /data/tombstones/mdm/
     group system
     disabled
     oneshot
-
-service asus-dbug-d /data/data/com.asus.debugger/files/asus-debugger-d
-    class late_start
-    disabled
 
 on property:gsm.radio.kickstart=on
     start kickstart
@@ -417,11 +400,10 @@ service qcamerasvr /system/bin/mm-qcamera-daemon
     user camera
     group camera system inet input
 
-service wcnss_init /system/bin/sh /system/etc/init.flo.wifi.sh
+service wcnss_init /system/bin/init.flo.wifi.sh
     class late_start
     user system
     group system wifi
-    seclabel u:r:conn_init:s0
     oneshot
 
 service bdAddrLoader /system/bin/bdAddrLoader -f /persist/bluetooth/.bdaddr -h -x
