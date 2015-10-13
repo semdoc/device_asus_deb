@@ -56,6 +56,9 @@ on boot
     # Allow QMUX daemon to assign port open wait time
     chown radio radio /sys/devices/virtual/hsicctl/hsicctl0/modem_wait
 
+    # java.io.FileNotFoundException: /proc/cmdline: open failed: EACCES (Permission denied)
+    chmod 0644 /proc/cmdline
+
     #port-bridge
     chmod 0660 /dev/smd0
     chown system system /dev/smd0
@@ -345,16 +348,6 @@ service iprenew_bt-pan /system/bin/dhcpcd -n
     disabled
     oneshot
 
-service dhcpcd_eth0 /system/bin/dhcpcd -ABDKL
-    class main
-    disabled
-    oneshot
-
-service iprenew_eth0 /system/bin/dhcpcd -n
-    class main
-    disabled
-    oneshot
-
 on property:ro.data.large_tcp_window_size=true
     # Adjust socket buffer to enlarge TCP receive window for high bandwidth (e.g. DO-RevB)
     write /proc/sys/net/ipv4/tcp_adv_win_scale  1
@@ -367,7 +360,6 @@ service charger /sbin/healthd -c
 service thermald /system/bin/thermald
     class main
     group radio system
-    disabled
 
 service mpdecision /system/bin/mpdecision --no_sleep --avg_comp
     class main
